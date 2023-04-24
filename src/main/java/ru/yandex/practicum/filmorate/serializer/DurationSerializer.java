@@ -21,15 +21,17 @@ public class DurationSerializer extends StdSerializer<Duration> implements JsonS
         super(t);
     }
 
-    @Override
-    public JsonElement serialize(Duration src, Type typeOfSrc, JsonSerializationContext context) {
-        return new JsonPrimitive(src.toSeconds());
-    }
-
+    // Override method for StdSerializer (jackson)
     @Override
     public void serialize(Duration duration, JsonGenerator jGen, SerializerProvider serializerProvider)
             throws
             IOException {
         jGen.writeNumber(duration.toSeconds());
+    }
+
+    // Override method for JsonSerializer (gson)
+    @Override
+    public JsonElement serialize(Duration src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(src.toSeconds());
     }
 }

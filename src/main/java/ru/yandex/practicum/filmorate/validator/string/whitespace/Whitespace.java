@@ -10,9 +10,9 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /*
-* if value() == true -> Whitespace is valid
-* else -> Whitespace is not valid
-* */
+ * if value() == true -> Whitespace is valid
+ * else -> Whitespace is not valid
+ * */
 
 @Documented
 @Target({FIELD, ANNOTATION_TYPE, TYPE, METHOD})
