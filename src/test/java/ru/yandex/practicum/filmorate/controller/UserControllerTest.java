@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.serializer.adapter.LocalDateAdapter;
+import ru.yandex.practicum.filmorate.util.serializer.adapter.LocalDateAdapter;
 
 import java.time.LocalDate;
 
@@ -23,14 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserControllerTest {
-    @Autowired
-    private UserController controller;
-
-    @Autowired
-    private MockMvc mvc;
-
     private static Gson gson;
     private static User user;
+    @Autowired
+    private UserController controller;
+    @Autowired
+    private MockMvc mvc;
 
     @BeforeAll
     public static void setGson() {

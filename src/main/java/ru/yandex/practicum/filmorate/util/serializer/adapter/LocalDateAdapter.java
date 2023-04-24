@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.serializer.adapter;
+package ru.yandex.practicum.filmorate.util.serializer.adapter;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

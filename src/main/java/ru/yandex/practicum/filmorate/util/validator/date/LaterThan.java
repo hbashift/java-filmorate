@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.validator.string.whitespace;
+package ru.yandex.practicum.filmorate.util.validator.date;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,18 +10,19 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /*
- * if value() == true -> Whitespace is valid
- * else -> Whitespace is not valid
- * */
+* if the annotated date is later than value() -> valid
+* else -> non-valid
+* */
 
 @Documented
 @Target({FIELD, ANNOTATION_TYPE, TYPE, METHOD})
 @Retention(RUNTIME)
-@Constraint(validatedBy = WhitespaceValidator.class)
-public @interface Whitespace {
-    String message() default "{Whitespace.invalid}";
+@Constraint(validatedBy = LaterThanValidator.class)
+public @interface LaterThan {
 
-    boolean value();
+    String message() default "{LaterThan.invalid}";
+
+    String value();
 
     Class<?>[] groups() default {};
 

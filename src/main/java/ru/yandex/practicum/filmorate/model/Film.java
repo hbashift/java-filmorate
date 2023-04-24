@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import ru.yandex.practicum.filmorate.serializer.DurationSerializer;
-import ru.yandex.practicum.filmorate.validator.date.LaterThan;
-import ru.yandex.practicum.filmorate.validator.duration.PositiveDuration;
+import ru.yandex.practicum.filmorate.util.serializer.DurationSerializer;
+import ru.yandex.practicum.filmorate.util.validator.date.LaterThan;
+import ru.yandex.practicum.filmorate.util.validator.duration.PositiveDuration;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,10 +14,10 @@ import java.time.Duration;
 
 @Data
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode
 @AllArgsConstructor
 public class Film {
-    @EqualsAndHashCode.Include
+    @EqualsAndHashCode.Exclude
     private int id;
 
     @NonNull

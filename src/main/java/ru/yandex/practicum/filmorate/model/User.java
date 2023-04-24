@@ -2,7 +2,7 @@ package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import ru.yandex.practicum.filmorate.validator.string.whitespace.Whitespace;
+import ru.yandex.practicum.filmorate.util.validator.string.whitespace.Whitespace;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,10 +11,9 @@ import java.time.LocalDate;
 
 @Data
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode
 @AllArgsConstructor
 public class User {
-    @EqualsAndHashCode.Include
     private int id;
 
     @NonNull

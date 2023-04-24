@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.validator.duration;
+package ru.yandex.practicum.filmorate.util.validator.duration;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

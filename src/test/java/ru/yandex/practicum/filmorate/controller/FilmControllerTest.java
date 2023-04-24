@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.serializer.DurationSerializer;
+import ru.yandex.practicum.filmorate.util.serializer.DurationSerializer;
 
 import java.time.Duration;
 
@@ -28,14 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
 class FilmControllerTest {
-    @Autowired
-    private FilmController controller;
-
-    @Autowired
-    private MockMvc mvc;
-
     private static Gson gson;
     private static Film film;
+    @Autowired
+    private FilmController controller;
+    @Autowired
+    private MockMvc mvc;
 
     @BeforeAll
     public static void setUp() {

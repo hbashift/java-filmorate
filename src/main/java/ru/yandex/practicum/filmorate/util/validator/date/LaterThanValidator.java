@@ -1,7 +1,7 @@
-package ru.yandex.practicum.filmorate.validator.date;
+package ru.yandex.practicum.filmorate.util.validator.date;
 
 import lombok.SneakyThrows;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
+import ru.yandex.practicum.filmorate.util.exception.ValidationException;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

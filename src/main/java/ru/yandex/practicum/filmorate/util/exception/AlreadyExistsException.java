@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.exception;
+package ru.yandex.practicum.filmorate.util.exception;
 
 public abstract class AlreadyExistsException extends Exception {
     public AlreadyExistsException() {
