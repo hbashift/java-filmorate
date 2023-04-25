@@ -44,3 +44,11 @@ build/
 
 *.db
 db/*
+
+### Maven ###
+.mvn/
+mvnw.cmd
+mvnw
+
+### Other files ###
+HELP.md
