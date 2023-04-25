@@ -10,9 +10,9 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /*
-* if the annotated date is later than value() -> valid
-* else -> non-valid
-* */
+ * if the annotated date is later than value() -> valid
+ * else -> non-valid
+ * */
 
 @Documented
 @Target({FIELD, ANNOTATION_TYPE, TYPE, METHOD})

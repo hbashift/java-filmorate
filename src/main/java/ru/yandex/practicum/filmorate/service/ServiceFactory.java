@@ -4,11 +4,11 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
 public class ServiceFactory {
-    public static Service<Film> getFilmService() {
+    public static CommonService<Film> getFilmService() {
         return new FilmService();
     }
 
-    public static Service<User> getUserService() {
+    public static CommonService<User> getUserService() {
         return new UserService();
     }
 }

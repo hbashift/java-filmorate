@@ -29,6 +29,7 @@ public class LaterThanValidator implements ConstraintValidator<LaterThan, String
         if (value == null) {
             return true;
         }
+
         LocalDate date;
 
         try {

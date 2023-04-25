@@ -5,7 +5,7 @@ import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
 import java.util.List;
 
-public interface Service<T> {
+public interface CommonService<T> {
     List<T> getAll();
 
     T create(T model) throws AlreadyExistsException;

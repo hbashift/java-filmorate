@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @AllArgsConstructor
 public class User {
+    @EqualsAndHashCode.Exclude
     private int id;
 
     @NonNull

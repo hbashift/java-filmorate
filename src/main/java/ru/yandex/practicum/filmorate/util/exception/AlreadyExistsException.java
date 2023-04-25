@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.util.exception;
 
-public abstract class AlreadyExistsException extends Exception {
+public abstract class AlreadyExistsException extends IllegalArgumentException {
     public AlreadyExistsException() {
     }
 

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.util.exception.NoSuchUserException;
 import ru.yandex.practicum.filmorate.util.exception.UserAlreadyExistsException;
@@ -9,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@org.springframework.stereotype.Service
-class UserService implements Service<User> {
+@Service
+class UserService implements CommonService<User> {
     private final Map<Integer, User> users;
     private int id;
 
