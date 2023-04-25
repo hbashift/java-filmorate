@@ -2,8 +2,8 @@ package ru.yandex.practicum.filmorate.service;
 
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.util.exception.NoSuchUserException;
-import ru.yandex.practicum.filmorate.util.exception.UserAlreadyExistsException;
+import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
+import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,14 +26,14 @@ class UserService implements CommonService<User> {
     }
 
     @Override
-    public User create(User user) throws UserAlreadyExistsException {
+    public User create(User user) throws AlreadyExistsException {
         user.setId(++id);
 
         if (user.getName() == null)
             user.setName(user.getLogin());
 
         if (users.containsValue(user)) {
-            throw new UserAlreadyExistsException("Such user already exists");
+            throw new AlreadyExistsException("Such user already exists");
         }
 
         users.put(id, user);
@@ -42,9 +42,9 @@ class UserService implements CommonService<User> {
     }
 
     @Override
-    public User update(User user) throws NoSuchUserException {
+    public User update(User user) throws NoSuchModelException {
         if (!users.containsKey(user.getId())) {
-            throw new NoSuchUserException("There is no such user");
+            throw new NoSuchModelException("There is no such user");
         }
 
         users.put(user.getId(), user);

@@ -1,8 +1,6 @@
 package ru.yandex.practicum.filmorate.util.exception;
 
-import java.util.NoSuchElementException;
-
-public abstract class NoSuchModelException extends NoSuchElementException {
+public class NoSuchModelException extends RuntimeException {
     public NoSuchModelException() {
         super();
     }

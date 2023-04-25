@@ -2,8 +2,8 @@ package ru.yandex.practicum.filmorate.service;
 
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.util.exception.FilmAlreadyExistsException;
-import ru.yandex.practicum.filmorate.util.exception.NoSuchFilmException;
+import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
+import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,10 +26,10 @@ class FilmService implements CommonService<Film> {
     }
 
     @Override
-    public Film create(Film film) throws FilmAlreadyExistsException {
+    public Film create(Film film) throws AlreadyExistsException {
         film.setId(++id);
         if (films.containsValue(film)) {
-            throw new FilmAlreadyExistsException("Such film already exists");
+            throw new AlreadyExistsException("Such film already exists");
         }
 
         films.put(id, film);
@@ -38,9 +38,9 @@ class FilmService implements CommonService<Film> {
     }
 
     @Override
-    public Film update(Film film) throws NoSuchFilmException {
+    public Film update(Film film) throws NoSuchModelException {
         if (!films.containsKey(film.getId())) {
-            throw new NoSuchFilmException("There is no such film");
+            throw new NoSuchModelException("There is no such film");
         }
 
         films.put(film.getId(), film);

@@ -1,29 +1,18 @@
 package ru.yandex.practicum.filmorate.util.validator.date;
 
-import lombok.SneakyThrows;
-import ru.yandex.practicum.filmorate.util.exception.ValidationException;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class LaterThanValidator implements ConstraintValidator<LaterThan, String> {
     private LocalDate minDate;
-    // TODO узнать, что за SneakyThrows и как прокинуть exception по нормальному
 
-    @SneakyThrows
     @Override
     public void initialize(final LaterThan annotationValue) {
-        try {
-            this.minDate = LocalDate.parse(annotationValue.value(), DateTimeFormatter.ISO_DATE);
-        } catch (DateTimeParseException e) {
-            throw new ValidationException("date format incorrect");
-        }
+        this.minDate = LocalDate.parse(annotationValue.value(), DateTimeFormatter.ISO_DATE);
     }
 
-    @SneakyThrows
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
@@ -32,11 +21,7 @@ public class LaterThanValidator implements ConstraintValidator<LaterThan, String
 
         LocalDate date;
 
-        try {
-            date = LocalDate.parse(value, DateTimeFormatter.ISO_DATE);
-        } catch (DateTimeParseException e) {
-            throw new ValidationException("date format is incorrect");
-        }
+        date = LocalDate.parse(value, DateTimeFormatter.ISO_DATE);
 
         return compare(date);
     }
