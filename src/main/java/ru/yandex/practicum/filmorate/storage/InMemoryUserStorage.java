@@ -17,14 +17,6 @@ public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private Long userId = 1L;
 
-    public static void main(String[] args) {
-        InMemoryUserStorage userStorage = new InMemoryUserStorage();
-
-        User user = new User("asdf@mail.ru", "login", LocalDate.of(2002, 12, 31));
-        userStorage.addUser(user);
-        System.out.println(userStorage.getSharedFriendsList(1L, 10L));
-    }
-
     @Override
     public List<User> getUsers() {
         return new ArrayList<>(users.values());
