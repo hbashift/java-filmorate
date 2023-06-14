@@ -48,6 +48,11 @@ public class FilmController {
 
     @DeleteMapping("/{id}/like/{userId}")
     public Film deleteLike(@PathVariable Long id, @PathVariable Long userId) {
+        if (id < 0 || userId < 0) {
+            log.warn("id is negative. expected positive");
+
+            exceptionService.throwBadRequest("id is negative. expected positive");
+        }
 
         log.info("DELETE /{}/like/{}", id, userId);
         return filmService.deleteLike(id, userId);
@@ -63,7 +68,7 @@ public class FilmController {
     @GetMapping("/popular")
     public List<Film> getTop10Films(@RequestParam(defaultValue = "10") int count) {
         if (count < 0) {
-            log.error("Negative count");
+            log.warn("Negative count");
             exceptionService.throwBadRequest("Count is negative: = " + count + ", expected positive");
         }
 
