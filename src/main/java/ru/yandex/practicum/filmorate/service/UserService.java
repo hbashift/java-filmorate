@@ -86,7 +86,7 @@ public class UserService {
         return userStorage.getFriends(id);
     }
 
-    public List<User>  getSharedFriendsList(Long userId, Long friendId) {
+    public List<User> getSharedFriendsList(Long userId, Long friendId) {
         List<User> output;
 
         try {

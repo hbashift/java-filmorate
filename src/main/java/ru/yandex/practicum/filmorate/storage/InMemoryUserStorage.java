@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,13 +92,5 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public boolean contains(Long userId) {
         return users.containsKey(userId);
-    }
-
-    public static void main(String[] args) {
-        InMemoryUserStorage userStorage = new InMemoryUserStorage();
-
-        User user = new User("asdf@mail.ru", "login", LocalDate.of(2002, 12, 31));
-        userStorage.addUser(user);
-        System.out.println(userStorage.getSharedFriendsList(1L, 10L));
     }
 }
