@@ -31,7 +31,7 @@ public class FilmService {
     }
 
     public Film updateFilm(Film film) throws NoSuchModelException {
-        if (!filmStorage.contains(film.getId())) {
+        if (!filmStorage.contains(film)) {
             log.warn("tried to update non-existing film");
 
             throw new NoSuchModelException("There is no such film");
@@ -83,7 +83,7 @@ public class FilmService {
     }
 
     public List<Film> getTop(int count) {
-        return filmStorage.getTop(10);
+        return filmStorage.getTop(count);
     }
 
     public User getUser(Long userId) {

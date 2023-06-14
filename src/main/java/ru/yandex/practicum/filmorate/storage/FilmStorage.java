@@ -19,5 +19,5 @@ public interface FilmStorage {
 
     List<Film> getTop(int count);
 
-    boolean contains(Long filmId);
+    boolean contains(Film film);
 }

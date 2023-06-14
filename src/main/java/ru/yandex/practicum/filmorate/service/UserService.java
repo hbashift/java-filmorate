@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User addUser(User user) throws AlreadyExistsException {
-        if (Objects.isNull(user.getName())) {
+        if (Objects.isNull(user.getName()) || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
 
@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public User update(User user) throws NoSuchModelException {
-        if (!userStorage.contains(user.getId())) {
+        if (!userStorage.contains(user)) {
             log.warn("tried to update non-existing user");
 
             throw new NoSuchModelException("There is no such user");

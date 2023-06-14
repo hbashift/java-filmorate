@@ -24,13 +24,13 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User addUser(User user) {
-        user.setId(userId++);
-
-        if (users.containsKey(user.getId())) {
+        if (users.containsValue(user)) {
             log.warn("tried to add already existing user");
 
-            throw new AlreadyExistsException("user with user_id:{" + user.getId() + "} already exists");
+            throw new AlreadyExistsException("user with user_id:{" + userId + "} already exists");
         }
+
+        user.setId(userId++);
 
         users.put(user.getId(), user);
         log.info("user:{} added to the storage", user.getName());
@@ -90,7 +90,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public boolean contains(Long userId) {
-        return users.containsKey(userId);
+    public boolean contains(User user) {
+        return users.containsValue(user);
     }
 }

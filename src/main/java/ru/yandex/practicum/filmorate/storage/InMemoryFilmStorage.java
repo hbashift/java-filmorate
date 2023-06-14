@@ -24,13 +24,13 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film addFilm(Film film) {
-        film.setId(id++);
-
-        if (films.containsKey(film.getId())) {
+        if (films.containsValue(film)) {
             log.warn("tried to add already existing film");
 
-            throw new AlreadyExistsException("film with film_id:{" + film.getId() + "} already exists");
+            throw new AlreadyExistsException("film with film_id:{" + id + "} already exists");
         }
+
+        film.setId(id++);
 
         films.put(film.getId(), film);
         log.info("Film:{} added to the storage", film);
@@ -77,7 +77,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public boolean contains(Long filmId) {
-        return films.containsKey(filmId);
+    public boolean contains(Film film) {
+        return films.containsValue(film);
     }
 }
