@@ -19,5 +19,7 @@ public interface FilmStorage {
 
     List<Film> getTop(int count);
 
-    boolean contains(Film film);
+    boolean containsValue(Film film);
+
+    boolean containsKey(Long filmId);
 }

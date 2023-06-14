@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public User update(User user) throws NoSuchModelException {
-        if (!userStorage.contains(user)) {
+        if (!userStorage.containsId(user.getId())) {
             log.warn("tried to update non-existing user");
 
             throw new NoSuchModelException("There is no such user");
