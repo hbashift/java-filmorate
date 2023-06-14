@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,7 +11,6 @@ import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
 import ru.yandex.practicum.filmorate.util.exception.BadRequestException;
 import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
-import javax.validation.ValidationException;
 import java.time.format.DateTimeParseException;
 
 @Slf4j
