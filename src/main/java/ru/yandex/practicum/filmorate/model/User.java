@@ -1,7 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import ru.yandex.practicum.filmorate.util.validator.string.whitespace.Whitespace;
 
 import javax.validation.constraints.Email;

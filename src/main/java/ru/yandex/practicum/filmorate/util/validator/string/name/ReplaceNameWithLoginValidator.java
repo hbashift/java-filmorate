@@ -1,2 +1,4 @@
-package ru.yandex.practicum.filmorate.util.validator.string.name;public class ReplaceNameWithLoginValidator {
+package ru.yandex.practicum.filmorate.util.validator.string.name;
+
+public class ReplaceNameWithLoginValidator {
 }
