@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.ExceptionService;
 import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -51,7 +52,7 @@ public class FilmController {
         if (id < 0 || userId < 0) {
             log.warn("id is negative. expected positive");
 
-            exceptionService.throwBadRequest("id is negative. expected positive");
+            throw new NoSuchModelException("id is negative. expected positive");
         }
 
         log.info("DELETE /{}/like/{}", id, userId);
