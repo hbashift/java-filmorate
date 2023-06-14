@@ -31,7 +31,7 @@ public class FilmService {
     }
 
     public Film updateFilm(Film film) throws NoSuchModelException {
-        if (!filmStorage.containsValue(film)) {
+        if (!filmStorage.containsKey(film.getId())) {
             log.warn("tried to update non-existing film");
 
             throw new NoSuchModelException("There is no such film");
