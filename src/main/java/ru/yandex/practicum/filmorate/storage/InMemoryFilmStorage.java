@@ -17,12 +17,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Long, Film> films = new HashMap<>();
     private Long id = 1L;
 
-    public static void main(String[] args) {
-        InMemoryFilmStorage films = new InMemoryFilmStorage();
-
-        System.out.println(films.getTop(10));
-    }
-
     @Override
     public List<Film> getFilms() {
         return new ArrayList<>(films.values());
@@ -85,5 +79,11 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public boolean contains(Long filmId) {
         return films.containsKey(filmId);
+    }
+
+    public static void main(String[] args) {
+        InMemoryFilmStorage films = new InMemoryFilmStorage();
+
+        System.out.println(films.getTop(10));
     }
 }
