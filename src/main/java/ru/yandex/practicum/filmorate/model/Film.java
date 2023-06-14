@@ -11,14 +11,13 @@ import ru.yandex.practicum.filmorate.util.validator.date.LaterThan;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor
 public class Film {
     @EqualsAndHashCode.Exclude
-    private int id;
+    private Long id;
 
     @NonNull
     @NotBlank
@@ -40,4 +39,6 @@ public class Film {
     @DurationMin
     @JsonSerialize(using = DurationSerializer.class)
     private Duration duration;
+
+    private Set<Long> likes = new HashSet<>();
 }
