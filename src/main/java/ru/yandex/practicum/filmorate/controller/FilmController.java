@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.film.FilmService;
 import ru.yandex.practicum.filmorate.util.exception.BadRequestException;
-import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
+import ru.yandex.practicum.filmorate.util.exception.NotFoundException;
 
 import javax.validation.Valid;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Slf4j
@@ -20,7 +21,7 @@ public class FilmController {
     private final FilmService filmService;
 
     @GetMapping
-    public List<Film> getFilms() {
+    public LinkedHashSet<Film> getFilms() {
 
         log.info("GET /films");
         return filmService.getFilms();
@@ -40,26 +41,26 @@ public class FilmController {
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public Film addLike(@PathVariable Long id, @PathVariable Long userId) {
+    public Film addLike(@PathVariable int id, @PathVariable int userId) {
 
-        log.info("PUT /{}/like/{}", id, userId);
+        log.info("PUT /{}/Like/{}", id, userId);
         return filmService.addLike(id, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public Film deleteLike(@PathVariable Long id, @PathVariable Long userId) {
+    public Film deleteLike(@PathVariable int id, @PathVariable int userId) {
         if (id < 0 || userId < 0) {
             log.warn("id is negative. expected positive");
 
-            throw new NoSuchModelException("id is negative. expected positive");
+            throw new NotFoundException("id is negative. expected positive");
         }
 
-        log.info("DELETE /{}/like/{}", id, userId);
+        log.info("DELETE /{}/Like/{}", id, userId);
         return filmService.deleteLike(id, userId);
     }
 
     @GetMapping("/{id}")
-    public Film getFilm(@PathVariable Long id) {
+    public Film getFilm(@PathVariable int id) {
 
         log.info("GET film - /{}", id);
         return filmService.getFilm(id);

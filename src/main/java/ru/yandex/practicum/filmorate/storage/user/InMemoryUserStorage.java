@@ -1,20 +1,17 @@
-package ru.yandex.practicum.filmorate.storage;
+package ru.yandex.practicum.filmorate.storage.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
-    private final Map<Long, User> users = new HashMap<>();
-    private Long userId = 1L;
+    private final Map<Integer, User> users = new HashMap<>();
+    private int userId = 1;
 
     @Override
     public List<User> getUsers() {
@@ -46,16 +43,16 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public User addFriend(Long id, Long friendId) {
-        users.get(id).getFriends().add(friendId);
-        users.get(friendId).getFriends().add(id);
+    public User addFriend(int id, int friendId) {
+        users.get(id).getFriends().add(users.get(friendId));
+        users.get(friendId).getFriends().add(users.get(friendId));
         log.info("Пользователи с user_id:{} и {} теперь друзья", id, friendId);
 
         return users.get(id);
     }
 
     @Override
-    public User deleteFriend(Long id, Long friendId) {
+    public User deleteFriend(int id, int friendId) {
         users.get(id).getFriends().remove(friendId);
         users.get(friendId).getFriends().remove(id);
         log.info("Пользователи с user_id:{} и {} перестали быть друзьями", id, friendId);
@@ -64,7 +61,17 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public User getUser(Long id) {
+    public List<User> getMutualFriends(int id, int otherId) {
+        return null;
+    }
+
+    @Override
+    public User getUserById(int id) {
         return users.get(id);
+    }
+
+    @Override
+    public Set<User> getFriendsByUserId(int id) {
+        return null;
     }
 }
