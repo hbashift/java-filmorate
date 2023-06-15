@@ -6,8 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import ru.yandex.practicum.filmorate.model.ErrorMessage;
 import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
+import ru.yandex.practicum.filmorate.util.exception.BadRequestException;
 import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
 import java.time.format.DateTimeParseException;
@@ -17,7 +19,7 @@ import java.time.format.DateTimeParseException;
 public class ExceptionApiHandler {
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<ErrorMessage> alreadyExistsException(AlreadyExistsException e) {
+    public ResponseEntity<ErrorMessage> alreadyExistsException(final AlreadyExistsException e) {
         log.warn("Trying to create already existing entity. Exception:{}", e.getClass());
 
         return ResponseEntity
@@ -26,7 +28,7 @@ public class ExceptionApiHandler {
     }
 
     @ExceptionHandler(NoSuchModelException.class)
-    public ResponseEntity<ErrorMessage> noSuchModelException(NoSuchModelException e) {
+    public ResponseEntity<ErrorMessage> noSuchModelException(final NoSuchModelException e) {
         log.warn("Trying to update non-existing entity. Exception:{}", e.getClass());
 
         return ResponseEntity
@@ -50,5 +52,19 @@ public class ExceptionApiHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorMessage("one of the arguments is not valid"));
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorMessage> badRequestException() {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorMessage("bad request. check arguments"));
+    }
+
+    @ExceptionHandler(InternalServerError.class)
+    public ResponseEntity<ErrorMessage> internalServerError(InternalServerError e) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorMessage("internal server error: " + e.getMessage()));
     }
 }
