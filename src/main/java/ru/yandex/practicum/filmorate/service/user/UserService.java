@@ -1,17 +1,16 @@
-package ru.yandex.practicum.filmorate.service;
+package ru.yandex.practicum.filmorate.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
+import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
-import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
+import ru.yandex.practicum.filmorate.util.exception.NotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -32,11 +31,11 @@ public class UserService {
         return userStorage.addUser(user);
     }
 
-    public User update(User user) throws NoSuchModelException {
-        if (Objects.isNull(userStorage.getUser(user.getId()))) {
+    public User update(User user) throws NotFoundException {
+        if (Objects.isNull(userStorage.getUserById(user.getId()))) {
             log.warn("tried to update non-existing user");
 
-            throw new NoSuchModelException("There is no such user");
+            throw new NotFoundException("There is no such user");
         }
 
         userStorage.updateUser(user);
@@ -44,19 +43,19 @@ public class UserService {
         return user;
     }
 
-    public User getUser(Long userId) throws NoSuchModelException {
-        User user = userStorage.getUser(userId);
+    public User getUser(int userId) throws NotFoundException {
+        User user = userStorage.getUserById(userId);
 
         if (Objects.isNull(user)) {
             log.warn("no user with user_id:{}", userId);
 
-            throw new NoSuchModelException("no user with user_id:{" + userId + "}");
+            throw new NotFoundException("no user with user_id:{" + userId + "}");
         }
 
         return user;
     }
 
-    public User addFriend(Long userId, Long friendId) {
+    public User addFriend(int userId, int friendId) {
         User user;
 
         try {
@@ -64,13 +63,13 @@ public class UserService {
         } catch (NullPointerException e) {
             log.warn("tried to add friend from non-existing user or wrong friend_id input");
 
-            throw new NoSuchModelException("wrong user_id or friend_id");
+            throw new NotFoundException("wrong user_id or friend_id");
         }
 
         return user;
     }
 
-    public User deleteFriend(Long userId, Long friendId) {
+    public User deleteFriend(int userId, int friendId) {
         User user;
 
         try {
@@ -78,30 +77,24 @@ public class UserService {
         } catch (NullPointerException e) {
             log.warn("tried to delete friend from non-existing user or wrong friend_id input");
 
-            throw new NoSuchModelException("wrong user_id or friend_id");
+            throw new NotFoundException("wrong user_id or friend_id");
         }
 
         return user;
     }
 
-    public List<User> getFriends(Long id) {
-        return userStorage.getUsers().stream()
-                .filter(user -> user.getFriends().contains(id))
-                .collect(Collectors.toList());
+    public Set<User> getFriends(int id) {
+        return userStorage.getFriendsByUserId(id);
     }
 
-    public List<User> getSharedFriendsList(Long id, Long friendId) {
-        List<User> sharedFriends = new ArrayList<>();
+    public List<User> getSharedFriendsList(int id, int friendId) {
+        List<User> sharedFriends;
 
         try {
-            for (Long userId : userStorage.getUser(id).getFriends()) {
-                if (getUser(friendId).getFriends().contains(userId)) {
-                    sharedFriends.add(getUser(userId));
-                }
-            }
+            sharedFriends = userStorage.getMutualFriends(id, friendId);
 
         } catch (NullPointerException e) {
-            throw new NoSuchModelException("no user with user_id:{" + id + "}");
+            throw new NotFoundException("no user with user_id:{" + id + "}");
         }
 
         return sharedFriends;

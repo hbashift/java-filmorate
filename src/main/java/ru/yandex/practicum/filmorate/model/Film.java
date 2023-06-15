@@ -1,25 +1,23 @@
 package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.time.DurationMin;
-import ru.yandex.practicum.filmorate.util.serializer.DurationSerializer;
 import ru.yandex.practicum.filmorate.util.validator.date.LaterThan;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.Duration;
-import java.util.HashSet;
+import javax.validation.constraints.Positive;
 import java.util.Set;
 
 @Data
+@Builder
 public class Film {
     @EqualsAndHashCode.Exclude
-    private Long id;
+    private int id;
 
     @NonNull
     @NotBlank
@@ -38,9 +36,12 @@ public class Film {
 
     @NonNull
     @NotNull
-    @DurationMin
-    @JsonSerialize(using = DurationSerializer.class)
-    private Duration duration;
+    @Positive
+    private int duration;
 
-    private Set<Long> likes = new HashSet<>();
+    private Set<Integer> likes;
+
+    private Mpa mpa;
+
+    private Set<Genre> genres;
 }

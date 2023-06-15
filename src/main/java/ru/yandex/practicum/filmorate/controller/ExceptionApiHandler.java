@@ -10,7 +10,7 @@ import org.springframework.web.client.HttpServerErrorException.InternalServerErr
 import ru.yandex.practicum.filmorate.model.ErrorMessage;
 import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
 import ru.yandex.practicum.filmorate.util.exception.BadRequestException;
-import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
+import ru.yandex.practicum.filmorate.util.exception.NotFoundException;
 
 import java.time.format.DateTimeParseException;
 
@@ -27,8 +27,8 @@ public class ExceptionApiHandler {
                 .body(new ErrorMessage(e.getMessage()));
     }
 
-    @ExceptionHandler(NoSuchModelException.class)
-    public ResponseEntity<ErrorMessage> noSuchModelException(final NoSuchModelException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorMessage> noSuchModelException(final NotFoundException e) {
         log.warn("Trying to update non-existing entity. Exception:{}", e.getClass());
 
         return ResponseEntity

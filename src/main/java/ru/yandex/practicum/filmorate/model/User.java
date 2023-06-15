@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -10,13 +11,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Builder
 public class User {
     @EqualsAndHashCode.Exclude
-    private Long id;
+    private int id;
 
     @NonNull
     @NotBlank(message = "null or blank email")
@@ -35,12 +36,5 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
-    private Set<Long> friends = new HashSet<>();
-
-    public User(@NonNull String email, @NonNull String login, String name, @NonNull LocalDate birthday) {
-        this.email = email;
-        this.login = login;
-        this.name = name;
-        this.birthday = birthday;
-    }
+    private Set<User> friends;
 }
