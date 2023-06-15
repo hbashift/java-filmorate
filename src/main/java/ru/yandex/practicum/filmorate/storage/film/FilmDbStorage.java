@@ -113,10 +113,10 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public List<Film> getTop(int count) {
-        String sqlQuery = "SELECT *, COUNT(l.film_id) as count FROM film f \n" +
-                "LEFT JOIN likes l ON f.film_id=l.film_id\n" +
-                "GROUP BY f.film_id\n" +
-                "ORDER BY count DESC\n" +
+        String sqlQuery = "SELECT *, COUNT(l.film_id) as count FROM film f " +
+                "LEFT JOIN likes l ON f.film_id=l.film_id " +
+                "GROUP BY f.film_id " +
+                "ORDER BY count DESC " +
                 "LIMIT ?";
 
         return jdbcTemplate.query(sqlQuery, this::resultFilmMapper, count);
@@ -150,8 +150,7 @@ public class FilmDbStorage implements FilmStorage {
         }
     }
 
-    protected LinkedHashSet<Genre>
-    getFilmGenres(int filmId) {
+    protected LinkedHashSet<Genre> getFilmGenres(int filmId) {
         String sqlQuery = "SELECT g.genre_id, g.name " +
                 "FROM genre g INNER JOIN FILM_GENRE FG on g.GENRE_ID = FG.GENRE_ID " +
                 "WHERE FG.FILM_ID = ?" +
