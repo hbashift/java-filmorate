@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import ru.yandex.practicum.filmorate.model.ErrorMessage;
 import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
 import ru.yandex.practicum.filmorate.util.exception.BadRequestException;
@@ -58,5 +59,12 @@ public class ExceptionApiHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorMessage("bad request. check arguments"));
+    }
+
+    @ExceptionHandler(InternalServerError.class)
+    public ResponseEntity<ErrorMessage> internalServerError(InternalServerError e) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorMessage("internal server error: " + e.getMessage()));
     }
 }

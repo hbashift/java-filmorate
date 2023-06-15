@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -65,24 +64,5 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.info("Пользователю с user_id:{} больше не нравится фильм с film_id:{}", userId, id);
 
         return films.get(id);
-    }
-
-    @Override
-    public List<Film> getTop(int count) {
-        return getFilms().stream()
-                .sorted((film, t1) -> t1.getLikes().size() - film.getLikes().size())
-                .limit(count)
-                .collect(Collectors.toList()
-                );
-    }
-
-    @Override
-    public boolean containsValue(Film film) {
-        return films.containsValue(film);
-    }
-
-    @Override
-    public boolean containsKey(Long filmId) {
-        return films.containsKey(filmId);
     }
 }

@@ -15,13 +15,5 @@ public interface UserStorage {
 
     User deleteFriend(Long id, Long friendId);
 
-    List<User> getSharedFriendsList(Long id, Long friendId);
-
     User getUser(Long id);
-
-    List<User> getFriends(Long id);
-
-    boolean containsUser(User user);
-
-    boolean containsId(Long id);
 }

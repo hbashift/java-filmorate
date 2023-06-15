@@ -8,8 +8,10 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 import ru.yandex.practicum.filmorate.util.exception.AlreadyExistsException;
 import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,7 +33,7 @@ public class UserService {
     }
 
     public User update(User user) throws NoSuchModelException {
-        if (!userStorage.containsId(user.getId())) {
+        if (Objects.isNull(userStorage.getUser(user.getId()))) {
             log.warn("tried to update non-existing user");
 
             throw new NoSuchModelException("There is no such user");
@@ -43,58 +45,65 @@ public class UserService {
     }
 
     public User getUser(Long userId) throws NoSuchModelException {
-        User output = userStorage.getUser(userId);
+        User user = userStorage.getUser(userId);
 
-        if (Objects.isNull(output)) {
+        if (Objects.isNull(user)) {
             log.warn("no user with user_id:{}", userId);
 
             throw new NoSuchModelException("no user with user_id:{" + userId + "}");
         }
 
-        return output;
+        return user;
     }
 
     public User addFriend(Long userId, Long friendId) {
-        User output;
+        User user;
 
         try {
-            output = userStorage.addFriend(userId, friendId);
+            user = userStorage.addFriend(userId, friendId);
         } catch (NullPointerException e) {
             log.warn("tried to add friend from non-existing user or wrong friend_id input");
 
             throw new NoSuchModelException("wrong user_id or friend_id");
         }
 
-        return output;
+        return user;
     }
 
     public User deleteFriend(Long userId, Long friendId) {
-        User output;
+        User user;
 
         try {
-            output = userStorage.deleteFriend(userId, friendId);
+            user = userStorage.deleteFriend(userId, friendId);
         } catch (NullPointerException e) {
             log.warn("tried to delete friend from non-existing user or wrong friend_id input");
 
             throw new NoSuchModelException("wrong user_id or friend_id");
         }
 
-        return output;
+        return user;
     }
 
     public List<User> getFriends(Long id) {
-        return userStorage.getFriends(id);
+        return userStorage.getUsers().stream()
+                .filter(user -> user.getFriends().contains(id))
+                .collect(Collectors.toList());
     }
 
-    public List<User> getSharedFriendsList(Long userId, Long friendId) {
-        List<User> output;
+    public List<User> getSharedFriendsList(Long id, Long friendId) {
+        List<User> sharedFriends = new ArrayList<>();
 
         try {
-            output = userStorage.getSharedFriendsList(userId, friendId);
+            for (Long userId : userStorage.getUser(id).getFriends()) {
+                if (getUser(friendId).getFriends().contains(userId)) {
+                    sharedFriends.add(getUser(userId));
+                }
+            }
+
         } catch (NullPointerException e) {
-            throw new NoSuchModelException("no user with user_id:{" + userId + "}");
+            throw new NoSuchModelException("no user with user_id:{" + id + "}");
         }
 
-        return output;
+        return sharedFriends;
     }
 }

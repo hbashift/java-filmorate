@@ -16,10 +16,4 @@ public interface FilmStorage {
     Film addLike(Long id, Long userId);
 
     Film deleteLike(Long id, Long userId);
-
-    List<Film> getTop(int count);
-
-    boolean containsValue(Film film);
-
-    boolean containsKey(Long filmId);
 }

@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.ExceptionService;
 import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.util.exception.BadRequestException;
 import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
 import javax.validation.Valid;
@@ -18,7 +18,6 @@ import java.util.List;
 public class FilmController {
 
     private final FilmService filmService;
-    private final ExceptionService exceptionService;
 
     @GetMapping
     public List<Film> getFilms() {
@@ -67,10 +66,10 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public List<Film> getTop10Films(@RequestParam(defaultValue = "10") int count) {
+    public List<Film> getTopFilms(@RequestParam(defaultValue = "10") int count) {
         if (count < 0) {
             log.warn("Negative count");
-            exceptionService.throwBadRequest("Count is negative: = " + count + ", expected positive");
+            throw new BadRequestException("Count is negative: = " + count + ", expected positive");
         }
 
         log.info("GET top:{} /popular", count);

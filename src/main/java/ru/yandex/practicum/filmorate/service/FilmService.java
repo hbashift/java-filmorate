@@ -12,6 +12,7 @@ import ru.yandex.practicum.filmorate.util.exception.NoSuchModelException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -25,78 +26,78 @@ public class FilmService {
     }
 
     public Film addFilm(Film film) throws AlreadyExistsException {
-        filmStorage.addFilm(film);
-
-        return film;
+        return filmStorage.addFilm(film);
     }
 
     public Film updateFilm(Film film) throws NoSuchModelException {
-        if (!filmStorage.containsKey(film.getId())) {
+        if (Objects.isNull(filmStorage.getFilm(film.getId()))) {
             log.warn("tried to update non-existing film");
 
             throw new NoSuchModelException("There is no such film");
         }
 
-        filmStorage.updateFilm(film);
-
-        return film;
+        return filmStorage.updateFilm(film);
     }
 
     public Film getFilm(Long id) throws NoSuchModelException {
-        Film output = filmStorage.getFilm(id);
+        Film film = filmStorage.getFilm(id);
 
-        if (Objects.isNull(output)) {
+        if (Objects.isNull(film)) {
             log.warn("no film with film_id:{}", id);
 
             throw new NoSuchModelException("no film with film_id:{" + id + "}");
         }
 
-        return output;
+        return film;
     }
 
     public Film addLike(Long filmId, Long userId) throws NoSuchModelException {
-        Film output;
+        Film film;
 
         try {
-            output = filmStorage.addLike(filmId, userId);
+            film = filmStorage.addLike(filmId, userId);
         } catch (NullPointerException e) {
             log.warn("tried to add like to non-existing film or wrong user_id input");
 
             throw new NoSuchModelException("wrong user_id or film_id");
         }
 
-        return output;
+        return film;
     }
 
     public Film deleteLike(Long filmId, Long userId) {
-        Film output;
+        Film film;
 
         try {
-            output = filmStorage.deleteLike(filmId, userId);
+            film = filmStorage.deleteLike(filmId, userId);
         } catch (NullPointerException e) {
             log.warn("tried to delete like to non-existing film or wrong user_id input");
 
             throw new NoSuchModelException("wrong user_id or film_id");
         }
 
-        return output;
+        return film;
     }
 
     public List<Film> getTop(int count) {
-        return filmStorage.getTop(count);
+        return filmStorage.getFilms().stream()
+                .sorted((film, t1) -> t1.getLikes().size() - film.getLikes().size())
+                .limit(count)
+                .collect(Collectors.toList()
+                );
     }
 
     public User getUser(Long userId) {
-        User output;
+        User user;
 
         try {
-            output = userStorage.getUser(userId);
+            user = userStorage.getUser(userId);
         } catch (NullPointerException e) {
             log.warn("no user with user_id:{}", userId);
 
             throw new NoSuchModelException("no user with user_id:{" + userId + "}");
         }
 
-        return output;
+        return user;
     }
 }
